@@ -1,0 +1,14 @@
+D:\MATLAB\R2021a
+D:\MATLAB\R2021a\bin\win64
+D:\MATLAB\R2021a\extern\engines\java\jar\engine.jar
+
+http://download.eclipse.org/epsilon/updates/2.5/
+
+Eclipse-2023-12+Epsilon-2.5+JAVA-11+Matlab2021a 不好使
+Eclipse-2021-12+Epsilon-2.4+JAVA-11+Matlab2021a 不好使
+Eclipse-2020-06+Epsilon-2.3+JAVA-11+Matlab2021a 不好使
+Eclipse-2020-06+Epsilon-2.5+JAVA-11+Matlab2021a 不好使
+Eclipse-2024-03+Epsilon-2.5+JAVA-17+Matlab2021a 不好使
+Eclipse-2022-06+Epsilon-2.5+JAVA-17+Matlab2021a 不好使
+Eclipse-2023-12+Epsilon-2.5+JAVA-8+Matlab2021a 不好使
+Eclipse-2021-06+Epsilon-2.5+JAVA-11+Matlab2021a Epsilon安装失败

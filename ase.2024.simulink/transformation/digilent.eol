@@ -1,65 +1,69 @@
 var randomMap = new Map;
 var original_reading;
 var new_reading = new Map;
+var true_value = 2.4000024;
 
 "Begin...".println();
 //showAllBlocksInformation();
 init();
 //execute(Sequence{"E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E"});
-//execute(Sequence{"A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A"});
-execute(Sequence{"E", "E", "A", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E"});
-
-//test1();
-//test2();
-//iterateResistor("Resistor1");
-//randomMap.keySet().println();
-
-
-
+//test_13()
+test_16394();
 "Done".println();
-//operation test1(){
-//	execute(Sequence{"E", "E", "E", "E", "E", "E", "E", "E"});
-//	execute(Sequence{"A", "E", "E", "E", "E", "E", "E", "E"});
-//	execute(Sequence{"E", "A", "E", "E", "E", "E", "E", "E"});
-//	execute(Sequence{"E", "E", "A", "E", "E", "E", "E", "E"});
-//	execute(Sequence{"E", "E", "E", "A", "E", "E", "E", "E"});
-//	execute(Sequence{"E", "E", "E", "E", "A", "E", "E", "E"});
-//	execute(Sequence{"E", "E", "E", "E", "E", "A", "E", "E"});
-//	execute(Sequence{"E", "E", "E", "E", "E", "E", "A", "E"});
-//	execute(Sequence{"E", "E", "E", "E", "E", "E", "E", "A"});
-//}
-//
-//operation test2(){
-//	var alphabet = Sequence {"A", "B", "C", "D"};
-////	var alphabet = Sequence {"A", "B"};
-//	var number = 1;
-//	for (a in alphabet){
-//		for (b in alphabet){
-//			for (c in alphabet){
-//				for (d in alphabet){
-//					for (e in alphabet){
-//						for (f in alphabet){
-//							number.println();
-//							var input = Sequence{};
-//							input.add(a);
-//							input.add(b);
-//							input.add(c);
-//							input.add("A");
-//							input.add("A");
-//							input.add(d);
-//							input.add(e);
-//							input.add(f);
-//							execute(input);
-//							number++;
-//						}
-//					}
-//				}
-//			}
-//		}
-//	}
-//}
 
-// inputs is a Sequence which has 7 String, ABCD.
+operation test_13(){
+	execute(Sequence{"A", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E"});
+	execute(Sequence{"E", "A", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E"});
+	execute(Sequence{"E", "E", "A", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E"});
+	execute(Sequence{"E", "E", "E", "A", "E", "E", "E", "E", "E", "E", "E", "E", "E"});
+	execute(Sequence{"E", "E", "E", "E", "A", "E", "E", "E", "E", "E", "E", "E", "E"});
+	execute(Sequence{"E", "E", "E", "E", "E", "A", "E", "E", "E", "E", "E", "E", "E"});
+	execute(Sequence{"E", "E", "E", "E", "E", "E", "A", "E", "E", "E", "E", "E", "E"});
+	execute(Sequence{"E", "E", "E", "E", "E", "E", "E", "A", "E", "E", "E", "E", "E"});
+	execute(Sequence{"E", "E", "E", "E", "E", "E", "E", "E", "A", "E", "E", "E", "E"});
+	execute(Sequence{"E", "E", "E", "E", "E", "E", "E", "E", "E", "A", "E", "E", "E"});
+	execute(Sequence{"E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "A", "E", "E"});
+	execute(Sequence{"E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "A", "E"});
+	execute(Sequence{"E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "A"});
+}
+
+operation test_16394(){
+	var alphabet = Sequence {"A", "B", "C", "D"};
+	var number = 1;
+	for (a in alphabet){
+		for (b in alphabet){
+			for (c in alphabet){
+				for (d in alphabet){
+					for (e in alphabet){
+						for (f in alphabet){
+							for (g in alphabet){
+								number.println();
+								var input = Sequence{};
+								input.add(a);
+								input.add(b);
+								input.add(c);
+								input.add("A");
+								input.add("A");
+								input.add("A");
+								input.add("A");
+								input.add(d);
+								input.add(e);
+								input.add(f);
+								input.add(g);
+								input.add("A");
+								input.add("A");
+								execute(input);
+								number++;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+// inputs is a Sequence which has 13 String, ABCD.
 operation execute(inputs : Sequence){
 	inputs.println();
 	var labels = Sequence{"Resistor", "Resistor1", "Resistor2", "Resistor3", "Resistor4", "Resistor5",
@@ -89,9 +93,10 @@ operation save_reading_result(inputs : Sequence) {
 	a.L = inputs[11];
 	a.M = inputs[12];
 	a.mean = mean(readings);
-	a.std = std(readings);
+	a.deta_mean = (a.mean.asReal() - true_value).abs();
+	a.std = std(readings, a.mean.asReal());
 	a.cost = inputs.getCost();
-	("deta_mean:"+(a.mean.asReal()-2.4000024).asReal().abs() + " mean:" + a.mean + "  std:" + a.std + "  cost:" + a.cost).println();
+	("deta_mean:"+ a.deta_mean + "  std:" + a.std + "  cost:" + a.cost).println();
 }
 
 operation Sequence getCost(){
@@ -110,26 +115,22 @@ operation Sequence getCost(){
 }
 
 operation setComponent(name: String, attr : String) {
-//	var component = getBlockFuzzy(name);
 	var value = getLevel(name, attr);
-	value.println(attr + " value = ");
+//	value.println(attr + " value = ");
 	var random = randomMap.get(name);
 	random.Variance = value;
 	random.Seed = getRandomInt(1000);
 }
 
 operation mean(resultSequence) {
-	resultSequence.first().println("resultSequence.first() = ");
-	resultSequence.last().println("resultSequence.last() = ");
 	return resultSequence.sum()/resultSequence.size();
 }
 
-operation std(input) {
-	var mean = mean(input);
+operation std(input : Sequence, mean : Real) {
 	var diff = 0;
 	var math = Native("java.lang.Math");
 	for(i in input) {
-		diff += math.pow(i-mean, 2);
+		diff += math.pow(i - mean, 2);
 	}
 	return math.sqrt(diff/(input.size()-1));
 }
@@ -138,13 +139,10 @@ operation simulate() {
 	M.simulate();
 }
 
-
 operation init() {
 	initMap();
 	simulate();
 	original_reading = getReading("u");
-//	original_reading.size().println();
-//	save_reading(original_reading);
 }
 
 operation getRandomInt(n){
@@ -160,11 +158,8 @@ operation save_reading(readings) {
 }
 
 operation getReading(simout : String) {
-//	var ss = "tout";
 	var engine = getEngine();
-	engine.evalAsync("u = simout.get('"+simout+"')");
-	var s = engine.getVariable("u");
-	return s;
+	return engine.getVariable(simout);
 }
 
 operation getLevel(name, level) {
@@ -228,10 +223,6 @@ operation getAllBlocks() {
 	return M!Block.all();
 }
 
-operation getBlockFuzzy(name : String) {
-	return getAllBlocks().select(b|b.Name = name).first();
-}
-
 operation getBlock(name) {
 	return getAllBlocks().select(b|b.Name = name).first();
 }
@@ -251,14 +242,8 @@ operation showAllBlocksInformation(){
 		("b.BlockType           = "+b.BlockType).println();
 		("b.PortHandles.Inport  = "+b.PortHandles.Inport).println();
 		("b.PortHandles.Outport = "+b.PortHandles.Outport).println();
-//		("b.PortHandles.Enable  = "+b.PortHandles.Enable).println();
-//		("b.PortHandles.Trigger = "+b.PortHandles.Trigger).println();
-//		("b.PortHandles.State   = "+b.PortHandles.State).println();
 		("b.PortHandles.LConn   = "+b.PortHandles.LConn).println();
 		("b.PortHandles.RConn   = "+b.PortHandles.RConn).println();
-//		("b.PortHandles.Ifaction= "+b.PortHandles.Ifaction).println();
-//		("b.PortHandles.Reset   = "+b.PortHandles.Reset).println();
-//		("b.PortHandles.Event   = "+b.PortHandles.Event).println();
 		for (line in b.portconnectivity){
 			if (line.isDefined()){
 				"+++++++++++++++++++++++".println();
