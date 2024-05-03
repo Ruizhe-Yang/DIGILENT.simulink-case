@@ -1,14 +1,21 @@
 var randomMap = new Map;
+var temperature_CMap = new Map;
 var original_reading;
 var new_reading = new Map;
 var true_value = 2.4000024;
+var standardT = 25.0;
+var temperature = 125; //[-40,125]
+
 
 "Begin...".println();
 //showAllBlocksInformation();
 init();
-//execute(Sequence{"E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E"});
-//test_13()
-test_16394();
+execute(Sequence{"E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E"});
+//execute(Sequence{"E", "E", "E", "A", "A", "A", "A", "E", "E", "E", "E", "A", "A"});
+//execute(Sequence{"D", "D", "D", "D", "D", "D", "D", "D", "D", "D", "D", "D", "D"});
+//execute(Sequence{"A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A"});
+//test_13();
+//test_16384();
 "Done".println();
 
 operation test_13(){
@@ -115,11 +122,13 @@ operation Sequence getCost(){
 }
 
 operation setComponent(name: String, attr : String) {
-	var value = getLevel(name, attr);
-//	value.println(attr + " value = ");
+	var variance = getLevelrandom(name, attr);
 	var random = randomMap.get(name);
-	random.Variance = value;
+	random.Variance = variance;
 	random.Seed = getRandomInt(1000);
+	var constant = getLevelTC(name, attr);
+	var temperature_C = temperature_CMap.get(name);
+	temperature_C.Value = constant;
 }
 
 operation mean(resultSequence) {
@@ -162,8 +171,7 @@ operation getReading(simout : String) {
 	return engine.getVariable(simout);
 }
 
-operation getLevel(name, level) {
-	var block = randomMap.get(name);
+operation getLevelrandom(name, level) {
 	var diff = getComponents().select(c|c.Name = name).first();
 	var ret;
 	switch(level) {
@@ -176,6 +184,19 @@ operation getLevel(name, level) {
 	var rate = ret.asReal();
 	var value = diff.Value.asReal();
 	return (rate*value/3.0).pow(2);
+}
+
+operation getLevelTC(name, level) {
+	var diff = getTemperatureCoefficients().select(c|c.Name = name).first();
+	var ret;
+	switch(level) {
+		case "A": ret = diff.A;
+		case "B": ret = diff.B;
+		case "C": ret = diff.C;
+		case "D": ret = diff.D;
+		case "E": ret = diff.E;
+	}
+	return ret.asReal()*0.000001*(temperature - standardT);
 }
 
 operation simulate() {
@@ -192,6 +213,10 @@ operation getComponents() {
 	return E!Component.all;
 }
 
+operation getTemperatureCoefficients() {
+	return E!Temperature_Coefficient.all;
+}
+
 operation getCosts() {
 	return E!Cost.all;
 }
@@ -202,11 +227,21 @@ operation initMap() {
 		var random = getRandom(c.Random);
 		randomMap.put(c.Name, random);
 	}
+	var components = getTemperatureCoefficients();
+	for(c in components) {
+		var constant = getTemperatureCoefficient(c.Constant);
+		temperature_CMap.put(c.Name, constant);
+	}
 }
 
 operation getRandom(name) {
 	var randoms = getAllBlocks().select(r|r.BlockType = "RandomNumber");
 	return randoms.selectOne(r|r.Name.endsWith(name));
+}
+
+operation getTemperatureCoefficient(name) {
+	var constants = getAllBlocks().select(r|r.BlockType = "Constant");
+	return constants.selectOne(r|r.Name.endsWith(name));
 }
 
 operation singleResistor(name, level) {
