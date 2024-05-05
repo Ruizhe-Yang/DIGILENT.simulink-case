@@ -2,20 +2,20 @@ var randomMap = new Map;
 var temperature_CMap = new Map;
 var original_reading;
 var new_reading = new Map;
-var true_value = 2.4000024;
+var true_value = 0.9000009;
 var standardT = 25.0;
-var temperature = 125; //[-40,125]
+var temperature = -40; //[-40,125]
 
 
 "Begin...".println();
 //showAllBlocksInformation();
 init();
-execute(Sequence{"E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E"});
+//execute(Sequence{"E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E"});
 //execute(Sequence{"E", "E", "E", "A", "A", "A", "A", "E", "E", "E", "E", "A", "A"});
 //execute(Sequence{"D", "D", "D", "D", "D", "D", "D", "D", "D", "D", "D", "D", "D"});
 //execute(Sequence{"A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A"});
-//test_13();
-//test_16384();
+test_13();
+test_16384();
 "Done".println();
 
 operation test_13(){
@@ -34,7 +34,7 @@ operation test_13(){
 	execute(Sequence{"E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "A"});
 }
 
-operation test_16394(){
+operation test_16384(){
 	var alphabet = Sequence {"A", "B", "C", "D"};
 	var number = 1;
 	for (a in alphabet){
